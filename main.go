@@ -34,6 +34,7 @@ func main() {
 	router.POST("/categories", controller.CreateCategory)
 
 	router.POST("/types", controller.CreateType)
+	router.GET("/types", controller.GetTypes)
 
 	router.Run()
 }

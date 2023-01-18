@@ -22,3 +22,17 @@ func CreateType(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": entryType})
 }
+
+func GetTypes(c *gin.Context) {
+	var types []model.Type
+
+	result := database.DB.Find(&types)
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Error": result.Error.Error(),
+		})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": types})
+}
