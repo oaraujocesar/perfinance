@@ -35,6 +35,7 @@ func main() {
 
 	router.POST("/types", controller.CreateType)
 	router.GET("/types", controller.GetTypes)
+	router.GET("/types/:id", controller.GetType)
 
 	router.Run()
 }

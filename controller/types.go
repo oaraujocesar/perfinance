@@ -27,7 +27,6 @@ func GetTypes(c *gin.Context) {
 	var types []model.Type
 
 	result := database.DB.Find(&types)
-
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Error": result.Error.Error(),
@@ -35,4 +34,19 @@ func GetTypes(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": types})
+}
+
+func GetType(c *gin.Context) {
+	var entityType model.Type
+
+	id := c.Param("id")
+
+	result := database.DB.Find(&entityType, id)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Error": result.Error.Error(),
+		})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": entityType})
 }
