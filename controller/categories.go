@@ -37,6 +37,22 @@ func GetCategories(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": categories})
 }
 
+func GetCategory(c *gin.Context) {
+	var category model.Category
+
+	id := c.Param("id")
+
+	result := database.DB.Find(&category, id)
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": result.Error.Error()})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": category})
+}
+
 func UpdateCategory(c *gin.Context) {
 	var input model.Category
 

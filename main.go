@@ -33,6 +33,7 @@ func main() {
 
 	router.POST("/categories", controller.CreateCategory)
 	router.GET("/categories", controller.GetCategories)
+	router.GET("/categories/:id", controller.GetCategories)
 	router.PATCH("/categories/:id", controller.UpdateCategory)
 
 	router.POST("/types", controller.CreateType)
