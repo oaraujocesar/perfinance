@@ -7,5 +7,5 @@ import (
 type Category struct {
 	gorm.Model
 
-	Name string
+	Name string `json:"name"`
 }
