@@ -81,3 +81,24 @@ func UpdateCategory(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": input})
 }
+
+func DeleteCategory(c *gin.Context) {
+	var category model.Category
+
+	id := c.Param("id")
+
+	result := database.DB.Delete(&category, id)
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"Error": "No item with matching criteria was found on the database."})
+
+		return
+	}
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": result.Error.Error()})
+
+		return
+	}
+
+	c.Status(http.StatusOK)
+}

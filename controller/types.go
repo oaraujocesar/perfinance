@@ -50,3 +50,24 @@ func GetType(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": entityType})
 }
+
+func DeleteType(c *gin.Context) {
+	var entityType model.Type
+
+	id := c.Param("id")
+
+	result := database.DB.Delete(&entityType, id)
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"Error": "No item with matching criteria was found on the database."})
+
+		return
+	}
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": result.Error.Error()})
+
+		return
+	}
+
+	c.Status(http.StatusOK)
+}

@@ -43,7 +43,6 @@ func GetEntry(c *gin.Context) {
 	id := c.Param("id")
 
 	result := database.DB.First(&entry, id)
-
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"Error": result.Error.Error()})
 
@@ -51,4 +50,25 @@ func GetEntry(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": entry})
+}
+
+func DeleteEntry(c *gin.Context) {
+	var entry model.Entry
+
+	id := c.Param("id")
+
+	result := database.DB.Delete(&entry, id)
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"Error": "No item with matching criteria was found on the database."})
+
+		return
+	}
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": result.Error.Error()})
+
+		return
+	}
+
+	c.Status(http.StatusOK)
 }

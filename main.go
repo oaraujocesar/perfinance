@@ -32,15 +32,18 @@ func main() {
 	router.GET("/entries", controller.GetEntries)
 	router.GET("/entries/:id", controller.GetEntry)
 	router.POST("/entries", controller.CreateEntry)
+	router.DELETE("/entries/:id", controller.DeleteEntry)
 
 	router.GET("/categories", controller.GetCategories)
 	router.GET("/categories/:id", controller.GetCategories)
 	router.POST("/categories", controller.CreateCategory)
 	router.PATCH("/categories/:id", controller.UpdateCategory)
+	router.DELETE("/categories/:id", controller.DeleteCategory)
 
 	router.GET("/types", controller.GetTypes)
 	router.GET("/types/:id", controller.GetType)
 	router.POST("/types", controller.CreateType)
+	router.DELETE("/types/:id", controller.DeleteType)
 
 	router.Run()
 }
