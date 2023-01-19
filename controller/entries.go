@@ -36,3 +36,19 @@ func GetEntries(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": entries})
 }
+
+func GetEntry(c *gin.Context) {
+	var entry model.Entry
+
+	id := c.Param("id")
+
+	result := database.DB.First(&entry, id)
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": result.Error.Error()})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": entry})
+}

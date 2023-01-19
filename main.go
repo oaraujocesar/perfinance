@@ -30,6 +30,7 @@ func main() {
 	})
 
 	router.GET("/entries", controller.GetEntries)
+	router.GET("/entries/:id", controller.GetEntry)
 	router.POST("/entries", controller.CreateEntry)
 
 	router.GET("/categories", controller.GetCategories)
