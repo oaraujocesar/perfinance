@@ -41,7 +41,7 @@ func GetType(c *gin.Context) {
 
 	id := c.Param("id")
 
-	result := database.DB.Find(&entityType, id)
+	result := database.DB.First(&entityType, id)
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Error": result.Error.Error(),
