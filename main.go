@@ -29,16 +29,17 @@ func main() {
 		})
 	})
 
+	router.GET("/entries", controller.GetEntries)
 	router.POST("/entries", controller.CreateEntry)
 
-	router.POST("/categories", controller.CreateCategory)
 	router.GET("/categories", controller.GetCategories)
 	router.GET("/categories/:id", controller.GetCategories)
+	router.POST("/categories", controller.CreateCategory)
 	router.PATCH("/categories/:id", controller.UpdateCategory)
 
-	router.POST("/types", controller.CreateType)
 	router.GET("/types", controller.GetTypes)
 	router.GET("/types/:id", controller.GetType)
+	router.POST("/types", controller.CreateType)
 
 	router.Run()
 }

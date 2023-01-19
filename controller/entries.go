@@ -22,3 +22,17 @@ func CreateEntry(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": credit})
 }
+
+func GetEntries(c *gin.Context) {
+	var entries []model.Entry
+
+	result := database.DB.Find(&entries)
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": result.Error.Error()})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": entries})
+}
