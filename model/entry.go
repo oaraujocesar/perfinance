@@ -11,4 +11,5 @@ type Entry struct {
 	Type       Type     `json:"type"`
 	CategoryID uint     `json:"categoryID"`
 	Category   Category `json:"category"`
+	UserID     uint     `json:"userID"`
 }

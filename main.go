@@ -46,5 +46,7 @@ func main() {
 	router.POST("/types", controller.CreateType)
 	router.DELETE("/types/:id", controller.DeleteType)
 
+	router.POST("/users", controller.CreateUser)
+
 	router.Run()
 }
