@@ -26,5 +26,6 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
+	user.MarshalJSON()
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }

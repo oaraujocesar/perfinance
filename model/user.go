@@ -1,7 +1,11 @@
 package model
 
 import (
-	"golang.org/x/crypto/bcrypt"
+	"encoding/json"
+	"fmt"
+
+	"github.com/matthewhartstonge/argon2"
+
 	"gorm.io/gorm"
 )
 
@@ -17,16 +21,29 @@ type User struct {
 	LastName  string  `json:"lastName"`
 	Email     *string `gorm:"unique;not null" json:"email"`
 	Avatar    string  `json:"avatar"`
-	Password  string  `json:"-"`
+	Password  string  `json:"password"`
 	Entries   []Entry `json:"entries"`
 }
 
 func (user *User) BeforeSave(tx *gorm.DB) (err error) {
-	EncryptedPassword := []byte(user.Password)
-
-	if pw, err := bcrypt.GenerateFromPassword(EncryptedPassword, 0); err == nil {
-		tx.Statement.SetColumn("password", string(pw))
+	argon := argon2.DefaultConfig()
+	hashedPassword, err := argon.HashEncoded([]byte(user.Password))
+	fmt.Println(user.Password, string(hashedPassword))
+	if err == nil {
+		tx.Statement.SetColumn("password", string(hashedPassword))
 	}
 
 	return nil
+}
+
+func (u User) MarshalJSON() ([]byte, error) {
+	type Alias User
+	safeUser := struct {
+		Password string `json:"password,omitempty"`
+		Alias
+	}{
+		Alias: Alias(u),
+	}
+
+	return json.Marshal(safeUser)
 }

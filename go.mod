@@ -2,7 +2,12 @@ module github.com/oaraujocesar/perfinance
 
 go 1.19
 
-require gorm.io/gorm v1.24.3
+require (
+	github.com/gin-contrib/cors v1.4.0
+	github.com/google/uuid v1.3.0
+	github.com/matthewhartstonge/argon2 v0.3.2
+	gorm.io/gorm v1.24.3
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -21,17 +26,18 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/crypto v0.5.0 // indirect
-	golang.org/x/net v0.5.0 // indirect
-	golang.org/x/text v0.6.0 // indirect
+	golang.org/x/crypto v0.6.0 // indirect
+	golang.org/x/net v0.6.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
 require (
+	github.com/cristalhq/jwt/v4 v4.0.2
 	github.com/gin-gonic/gin v1.8.2
 	github.com/joho/godotenv v1.4.0
 	github.com/mattn/go-isatty v0.0.17 // indirect
-	golang.org/x/sys v0.4.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
 	gorm.io/driver/postgres v1.4.6
 )

@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/oaraujocesar/perfinance/controller"
@@ -20,6 +22,14 @@ func main() {
 	database.Connect()
 
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:  []string{"*"},
+		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE", "PATCH"},
+		AllowHeaders:  []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders: []string{"Content-Length"},
+		MaxAge:        12 * time.Hour,
+	}))
 
 	router.SetTrustedProxies(nil)
 
@@ -46,7 +56,9 @@ func main() {
 	router.POST("/types", controller.CreateType)
 	router.DELETE("/types/:id", controller.DeleteType)
 
-	router.POST("/users", controller.CreateUser)
+	router.POST("/signup", controller.CreateUser)
+
+	router.POST("/signin", controller.Signin)
 
 	router.Run()
 }
