@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -21,7 +20,7 @@ func Signin(c *gin.Context) {
 	var user model.User
 
 	if err := c.ShouldBindJSON(&auth); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
 		return
 	}
@@ -29,20 +28,20 @@ func Signin(c *gin.Context) {
 	result := database.DB.Where("email = ?", auth.Email).First(&user)
 
 	if result.RowsAffected == 0 {
-		c.JSON(http.StatusUnauthorized, gin.H{"Error": "Usuário não cadastrado."})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Usuário não cadastrado."})
 
 		return
 	}
-	fmt.Println(auth.Password, user.Password)
+
 	ok, err := argon2.VerifyEncoded([]byte(auth.Password), []byte(user.Password))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"Error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 
 		return
 	}
 
 	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"Error": "Senha incorreta."})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Senha incorreta."})
 
 		return
 	}
